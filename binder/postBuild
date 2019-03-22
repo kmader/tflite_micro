@@ -1,3 +1,4 @@
 cd tensorflow
 tensorflow/lite/experimental/micro/tools/make/download_dependencies.sh
 make -f tensorflow/lite/experimental/micro/tools/make/Makefile test
+mv tensorflow/tensorflow notebooks/
