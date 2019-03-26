@@ -3,7 +3,7 @@
 #include "tensorflow/lite/experimental/micro/micro_interpreter.h"
 #include "tensorflow/lite/schema/schema_generated.h"
 #include "tensorflow/lite/version.h"
-#include "gait_cnn.h"
+#include "local_min_cnn.h"
 #include "tiny_conv_micro_features_model_data.h"
 #include <iostream>
 using namespace std;
@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
   // Map the model into a usable data structure. This doesn't involve any
   // copying or parsing, it's a very lightweight operation.
   const tflite::Model *model =
-      tflite::GetModel(gait_cnn_tflite);
+      tflite::GetModel(local_min_cnn_tflite);
 
   if (model->version() != TFLITE_SCHEMA_VERSION)
   {
@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  cout << "Model loaded!, Size:" << gait_cnn_tflite_len << ", Version:" << model->version();
+  cout << "Model loaded!, Size:" << local_min_cnn_tflite_len << ", Version:" << model->version();
   auto desc = model->description();
 
   cout << endl
@@ -40,10 +40,12 @@ int main(int argc, char *argv[])
   const long tensor_arena_size = 4 * 10 * 1024;
 
 #if TRUE
+  // use the heap
   uint8_t *tensor_arena;
   tensor_arena = (uint8_t *)malloc(sizeof(uint8_t) * tensor_arena_size);
   cout << "Tensor arena allocated on heap" << endl;
 #else
+  // use the stack like micro_speech
   uint8_t tensor_arena[tensor_arena_size];
   cout << "Tensor arena allocated on stack" << endl;
 #endif
