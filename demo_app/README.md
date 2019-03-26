@@ -33,4 +33,4 @@ lldb demo
 run
 ```
 
-Then use `bt` to backtrace if necessary 
+Then use `bt` to backtrace if necessary
