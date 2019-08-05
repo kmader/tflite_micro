@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
   // Create an area of memory to use for input, output, and intermediate arrays.
   // The size of this will depend on the model you're using, and may need to be
   // determined by experimentation.
-  const long tensor_arena_size = 4 * 10 * 1024;
+  const long tensor_arena_size = 4 * 1024 * 1024;
 
 #if TRUE
   // use the heap
