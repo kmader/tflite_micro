@@ -39,24 +39,17 @@ int main(int argc, char *argv[])
   // determined by experimentation.
   const long tensor_arena_size = 4 * 10 * 1024;
 
-#if TRUE
   // use the heap
   uint8_t *tensor_arena;
   tensor_arena = (uint8_t *)malloc(sizeof(uint8_t) * tensor_arena_size);
   cout << "Tensor arena allocated on heap" << endl;
-#else
-  // use the stack like micro_speech
-  uint8_t tensor_arena[tensor_arena_size];
-  cout << "Tensor arena allocated on stack" << endl;
-#endif
 
-  tflite::SimpleTensorAllocator tensor_allocator(tensor_arena,
-                                                 tensor_arena_size);
-
-  cout << "Allocator working (ish): Size=" << tensor_allocator.GetDataSize() << endl;
   // Build an interpreter to run the model with.
 
-  tflite::MicroInterpreter interpreter(model, resolver, &tensor_allocator,
+  tflite::MicroInterpreter interpreter(model, 
+                                       resolver, 
+                                       &tensor_arena,
+                                       tensor_arena_size,
                                        error_reporter);
 
   cout << "Interpreter loaded!" << endl;
