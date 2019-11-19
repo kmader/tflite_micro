@@ -1,0 +1,19 @@
+name: C/C++ CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: apt_deps
+      run: apt-get install -y xxd lldb
+    - name: post_build
+      run: |
+        chmod a+x binder/postBuild
+        sh binder/postBuild
+    - name: check_demo
+      run: ./simple_app/demo
