@@ -9,10 +9,10 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
+      with:
+        submodules: recursive     
     - name: apt_deps
       run: sudo apt-get install -y xxd lldb
-    - name: get_tensorflow
-      run: git submodule update --init --recursive
     - name: post_build
       run: |
         chmod a+x binder/postBuild
