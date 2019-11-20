@@ -1,4 +1,4 @@
-name: test_demo_app
+name: compile
 
 on: [push, pull_request]
 
@@ -13,9 +13,7 @@ jobs:
         submodules: recursive     
     - name: apt_deps
       run: sudo apt-get install -y xxd lldb
-    - name: post_build
+    - name: compile
       run: |
         chmod a+x binder/postBuild
         sh binder/postBuild
-    - name: check_demo
-      run: ./simple_app/demo
